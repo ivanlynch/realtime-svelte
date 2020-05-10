@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - "5432:5432"
+  server:
+    image: hasura/graphql-engine:v1.2.1
+    environment: 
+      - HASURA_GRAPHQL_DATABASE_URL=postgres://postgres:123456@host.docker.internal:5432/postgres
+      - HASURA_GRAPHQL_ENABLE_CONSOLE=true
+      - HASURA_GRAPHQL_LOG_LEVEL=debug
+    ports: 
+      - "8080:8080"
+    depends_on: 
+      - db
+      
